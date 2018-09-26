@@ -10,6 +10,8 @@
       {
         "mode": "wrap"
       }
-    ]
+    ],
+    "transform-class-properties",
+    "transform-object-rest-spread"
   ]
 }
