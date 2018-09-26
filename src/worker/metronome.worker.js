@@ -1,5 +1,4 @@
 /* eslint-env worker */
-console.log('///////Require time!///////')
 
 const worker = () => {
     const ACTION_START = 'START';
@@ -11,7 +10,6 @@ const worker = () => {
     let timer = null;
 
     self.onmessage = (event) => {
-        console.log(`///////Message time! ${event}///////`)
         const { data: { action } } = event;
 
         switch (action) {
@@ -33,15 +31,12 @@ const worker = () => {
                 timer = setInterval(
                     () => self.postMessage(ACTION_TICK),
                     SCHEDULER_INTERVAL
-                )
+                );
             }
             break;
 
         default:
-            throw new Error(
-                `Action must be of type: ${ACTION_START}, ${ACTION_STOP} or
-                ${ACTION_UPDATE} (received ${action}).`
-            );
+            throw new Error(`Invalid action type:${action}).`);
         }
     };
 };
