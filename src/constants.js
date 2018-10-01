@@ -7,3 +7,6 @@ export const TICKS_PER_BEAT_TERNARY = 12;
 export const SECONDS_IN_MINUTE = 60;
 export const SCHEDULE_AHEAD_TIME = 0.1;
 export const NOTE_LENGTH = 0.05;
+export const FIRST_BEAT = 'first-beat';
+export const SUB_BEAT = 'sub-beat';
+export const SUB_DIVIDE_BEAT = 'subdivision-beat';
