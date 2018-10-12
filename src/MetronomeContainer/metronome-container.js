@@ -48,18 +48,21 @@ class Metronome extends React.Component {
     }
 
     componentDidMount() {
+        // Worker will send ticks at setTimeout intervals
+        // Then we will schedule ahead a very short time here
+        // For sound playback
         this.scheduleWorker.onmessage = (event) => {
             if (event.data === ACTION_TICK) {
                 this.noteScheduler();
             }
         };
-        this.start();
     }
 
     componentWillUnmount() {
         this.stop();
     }
 
+    // Reset playing state, set current note time, and start worker
     start = () => {
         this.setState({
             playing: true,
@@ -72,6 +75,7 @@ class Metronome extends React.Component {
         this.nextNoteTime = this.audioContext.currentTime;
     };
 
+    // Set own state and stop worker
     stop = () => {
         this.setState({
             playing: false
@@ -82,10 +86,12 @@ class Metronome extends React.Component {
         });
     };
 
+    // Passed as callback to children for controlling playback
     togglePlaying = () => {
         this.state.playing ? this.stop() : this.start();
     };
 
+    // Passed as callback to children for controlling playback
     setTempo = (newTempo) => {
         this.setState({
             tempo: newTempo
@@ -125,11 +131,16 @@ class Metronome extends React.Component {
     };
 
     determineNoteType = (beatNumber) => {
+        // First note is always thes same, regardless of time sig
         if (beatNumber === 0) {
             return FIRST_BEAT;
         } else if (beatNumber % this.state.subBeats === 0) {
+            // Primary division beats happen as the LAST of the sub-beats
+            // More easily understood as
+            // (beatNumber % (subBeats * beatsPerMeasure) / beatsPerMeasure)
             return SUB_BEAT;
         }
+        // All other
         return SUB_DIVIDE_BEAT;
     };
 

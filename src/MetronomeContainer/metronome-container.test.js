@@ -36,7 +36,8 @@ describe('Metronome render', () => {
         const wrapper = mountComponent({ render: renderSpy });
         expect(renderedProps).toEqual({
             ...wrapper.state(),
-            setTempo: wrapper.instance().setTempo
+            setTempo: wrapper.instance().setTempo,
+            togglePlaying: wrapper.instance().togglePlaying
         });
     });
 });
